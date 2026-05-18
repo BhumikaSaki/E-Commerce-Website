@@ -1,0 +1,73 @@
+.hero {
+  padding: 5rem 0 4rem;
+  background: linear-gradient(135deg, #f0fdfa 0%, var(--color-bg) 50%, #fffbeb 100%);
+}
+
+.hero-content {
+  max-width: 640px;
+}
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--color-primary);
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.hero-cta {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+
+.section {
+  padding: 3rem 0 4rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.section-link {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.section-link:hover {
+  text-decoration: underline;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
