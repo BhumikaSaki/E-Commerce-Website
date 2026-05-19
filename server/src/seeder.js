@@ -20,6 +20,8 @@ const importData = async () => {
     await User.create({
       name: 'Admin User',
       email: 'admin@shopby.com',
+      phone: '9876543210',
+      countryCode: '+91',
       password: 'admin123',
       isAdmin: true,
     });
@@ -27,6 +29,8 @@ const importData = async () => {
     await User.create({
       name: 'Demo User',
       email: 'demo@shopby.com',
+      phone: '9876543211',
+      countryCode: '+91',
       password: 'demo123',
     });
 

@@ -3,6 +3,7 @@ import Product from '../models/Product.js';
 import { configureCloudinary } from '../config/cloudinary.js';
 import { uploadImageBuffer, deleteImage } from '../services/cloudinaryService.js';
 import { formatUser } from '../utils/userResponse.js';
+import { normalizeEmail, normalizePhone } from '../utils/authHelpers.js';
 
 export const updateUserProfile = async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -11,9 +12,30 @@ export const updateUserProfile = async (req, res) => {
     throw new Error('User not found');
   }
 
-  user.name = req.body.name || user.name;
-  user.email = req.body.email || user.email;
-  if (req.body.password) user.password = req.body.password;
+  if (req.body.name) user.name = req.body.name.trim();
+
+  if (req.body.email) {
+    const email = normalizeEmail(req.body.email);
+    const taken = await User.findOne({ email, _id: { $ne: user._id } });
+    if (taken) {
+      return res.status(400).json({ message: 'Email is already in use' });
+    }
+    user.email = email;
+  }
+
+  if (req.body.phone) {
+    const phone = normalizePhone(req.body.phone);
+    if (!phone) {
+      return res.status(400).json({ message: 'Phone number must be exactly 10 digits' });
+    }
+    const taken = await User.findOne({ phone, _id: { $ne: user._id } });
+    if (taken) {
+      return res.status(400).json({ message: 'Phone number is already in use' });
+    }
+    user.phone = phone;
+  }
+
+  if (req.body.countryCode) user.countryCode = req.body.countryCode.trim();
 
   const updated = await user.save();
   res.json(formatUser(updated));
@@ -73,6 +95,34 @@ export const addToWishlist = async (req, res) => {
   await user.save();
   const populated = await User.findById(user._id).populate('wishlist');
   res.status(201).json(populated.wishlist);
+};
+
+export const changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ message: 'Current and new password are required' });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({ message: 'New password must be at least 6 characters' });
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  const isMatch = await user.matchPassword(currentPassword);
+  if (!isMatch) {
+    return res.status(401).json({ message: 'Current password is incorrect' });
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  res.json({ message: 'Password updated successfully' });
 };
 
 export const removeFromWishlist = async (req, res) => {

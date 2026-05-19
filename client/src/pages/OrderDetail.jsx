@@ -4,7 +4,7 @@ import api from '../api/axios.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
-import './OrderDetail.css';
+import { formatINR } from '../utils/formatPrice.js';
 
 function OrderDetail() {
   const { id } = useParams();
@@ -64,10 +64,10 @@ function OrderDetail() {
               <div>
                 <p>{item.name}</p>
                 <p className="muted">
-                  {item.qty} × ${item.price.toFixed(2)}
+                  {item.qty} × {formatINR(item.price)}
                 </p>
               </div>
-              <span>${(item.qty * item.price).toFixed(2)}</span>
+              <span className="font-medium">{formatINR(item.qty * item.price)}</span>
             </div>
           ))}
         </section>
@@ -82,7 +82,7 @@ function OrderDetail() {
 
           <h2>Payment</h2>
           <p>{order.paymentMethod}</p>
-          <p className="order-total-big">Total: ${order.totalPrice.toFixed(2)}</p>
+          <p className="mt-4 text-xl font-bold text-brand-700">Total: {formatINR(order.totalPrice)}</p>
         </section>
       </div>
     </div>

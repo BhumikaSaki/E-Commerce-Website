@@ -56,6 +56,8 @@ CLOUDINARY_API_SECRET=
 
 ### 3. Seed & run
 
+Re-run seed after product updates (54 products, prices in **INR**):
+
 ```bash
 npm run seed
 npm run server    # terminal 1 — port 5000
@@ -69,6 +71,7 @@ npm run client    # terminal 2 — port 3000
 | GET | `/api/products?page&limit&sort&keyword&category` | Paginated products |
 | GET | `/api/products/search/suggest?q=` | Live search suggestions |
 | POST | `/api/products/:id/reviews` | Add review (auth) |
+| PUT | `/api/users/password` | Change password (auth) |
 | POST | `/api/users/avatar` | Upload profile photo (multipart) |
 | GET/POST/DELETE | `/api/users/wishlist/:productId` | Wishlist |
 | GET | `/api/admin/stats` | Dashboard analytics (admin) |

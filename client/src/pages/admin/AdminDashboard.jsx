@@ -12,6 +12,7 @@ import {
 import api from '../../api/axios.js';
 import Loader from '../../components/Loader.jsx';
 import Pagination from '../../components/Pagination.jsx';
+import { formatINR } from '../../utils/formatPrice.js';
 
 function AdminDashboard() {
   const [stats, setStats] = useState(null);
@@ -48,7 +49,7 @@ function AdminDashboard() {
     { label: 'Total Users', value: stats?.totalUsers, color: 'bg-blue-500' },
     { label: 'Total Products', value: stats?.totalProducts, color: 'bg-brand-600' },
     { label: 'Total Orders', value: stats?.totalOrders, color: 'bg-amber-500' },
-    { label: 'Total Revenue', value: `$${(stats?.totalRevenue || 0).toFixed(2)}`, color: 'bg-violet-600' },
+    { label: 'Total Revenue', value: formatINR(stats?.totalRevenue || 0), color: 'bg-violet-600' },
   ];
 
   return (
@@ -104,7 +105,7 @@ function AdminDashboard() {
                       {o.user?.name}
                     </div>
                   </td>
-                  <td className="p-3">${o.totalPrice?.toFixed(2)}</td>
+                  <td className="p-3">{formatINR(o.totalPrice)}</td>
                   <td className="p-3">{o.isPaid ? '✓' : '—'}</td>
                 </tr>
               ))}
@@ -122,6 +123,7 @@ function AdminDashboard() {
                 <th className="p-3">Photo</th>
                 <th className="p-3">Name</th>
                 <th className="p-3">Email</th>
+                <th className="p-3">Phone</th>
                 <th className="p-3">Admin</th>
               </tr>
             </thead>
@@ -137,6 +139,9 @@ function AdminDashboard() {
                   </td>
                   <td className="p-3 font-medium">{u.name}</td>
                   <td className="p-3">{u.email}</td>
+                  <td className="p-3">
+                    {u.phone ? `${u.countryCode || '+91'} ${u.phone}` : '—'}
+                  </td>
                   <td className="p-3">{u.isAdmin ? 'Yes' : 'No'}</td>
                 </tr>
               ))}
@@ -171,7 +176,7 @@ function AdminDashboard() {
                     </Link>
                   </td>
                   <td className="p-3">{o.user?.name || '—'}</td>
-                  <td className="p-3">${o.totalPrice?.toFixed(2)}</td>
+                  <td className="p-3">{formatINR(o.totalPrice)}</td>
                   <td className="p-3">{new Date(o.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}

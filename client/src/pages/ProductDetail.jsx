@@ -8,6 +8,7 @@ import { addRecentlyViewed } from '../hooks/useRecentlyViewed.js';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
 import ProductReviews from '../components/ProductReviews.jsx';
+import { formatINR } from '../utils/formatPrice.js';
 
 function ProductDetail() {
   const { id } = useParams();
@@ -78,7 +79,7 @@ function ProductDetail() {
           <span className="text-xs font-bold uppercase text-brand-700">{product.category}</span>
           <h1 className="mt-2 text-3xl font-bold">{product.name}</h1>
           <p className="text-stone-500">{product.brand}</p>
-          <p className="mt-4 text-3xl font-bold text-brand-700">${product.price.toFixed(2)}</p>
+          <p className="mt-4 text-3xl font-bold text-brand-700">{formatINR(product.price)}</p>
           <p className="mt-4 text-stone-600">{product.description}</p>
           <p className="mt-2 text-sm">
             {product.countInStock > 0 ? (

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios.js';
 import { useDebounce } from '../hooks/useDebounce.js';
+import { formatINR } from '../utils/formatPrice.js';
 
 function SearchBar() {
   const [query, setQuery] = useState('');
@@ -91,7 +92,7 @@ function SearchBar() {
                     <img src={item.image} alt="" className="h-10 w-10 rounded-lg object-cover" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium">{item.name}</p>
-                      <p className="text-sm text-brand-700">${item.price?.toFixed(2)}</p>
+                      <p className="text-sm text-brand-700">{formatINR(item.price)}</p>
                     </div>
                   </Link>
                 </li>

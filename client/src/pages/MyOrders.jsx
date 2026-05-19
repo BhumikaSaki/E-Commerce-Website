@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import Loader from '../components/Loader.jsx';
 import Pagination from '../components/Pagination.jsx';
 import Message from '../components/Message.jsx';
+import { formatINR } from '../utils/formatPrice.js';
 
 function MyOrders() {
   const { user } = useAuth();
@@ -52,7 +53,7 @@ function MyOrders() {
                   <p className="text-sm text-stone-500">{new Date(order.createdAt).toLocaleDateString()}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-bold">${order.totalPrice?.toFixed(2)}</p>
+                  <p className="font-bold text-brand-700">{formatINR(order.totalPrice)}</p>
                   <span className={`text-xs font-medium ${order.isPaid ? 'text-green-700' : 'text-amber-700'}`}>
                     {order.isPaid ? 'Paid' : 'Pending'}
                   </span>

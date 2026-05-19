@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from './AuthContext.jsx';
+import { formatINR } from '../utils/formatPrice.js';
 
 const SocketContext = createContext();
 
@@ -19,7 +20,7 @@ export const SocketProvider = ({ children }) => {
 
     socket.on('newOrder', (payload) => {
       setNotifications((prev) => [
-        { id: Date.now(), type: 'order', message: `New order from ${payload.user} — $${payload.totalPrice?.toFixed(2)}`, ...payload },
+        { id: Date.now(), type: 'order', message: `New order from ${payload.user} — ${formatINR(payload.totalPrice)}`, ...payload },
         ...prev,
       ]);
     });

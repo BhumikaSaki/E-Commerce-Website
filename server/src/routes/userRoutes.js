@@ -5,6 +5,7 @@ import {
   getWishlist,
   addToWishlist,
   removeFromWishlist,
+  changePassword,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/auth.js';
 import { uploadAvatar, handleMulterError } from '../middleware/upload.js';
@@ -15,6 +16,7 @@ const router = express.Router();
 router.use(protect);
 
 router.put('/profile', asyncHandler(updateUserProfile));
+router.put('/password', asyncHandler(changePassword));
 router.post(
   '/avatar',
   (req, res, next) => {

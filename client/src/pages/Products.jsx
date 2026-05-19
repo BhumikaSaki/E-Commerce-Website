@@ -6,7 +6,7 @@ import Pagination from '../components/Pagination.jsx';
 import Loader from '../components/Loader.jsx';
 import Message from '../components/Message.jsx';
 
-const CATEGORIES = ['All', 'Electronics', 'Clothing', 'Accessories', 'Footwear', 'Home'];
+const CATEGORIES = ['All', 'Electronics', 'Clothing', 'Footwear', 'Home', 'Beauty', 'Fitness', 'Accessories'];
 
 function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
